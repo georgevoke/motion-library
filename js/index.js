@@ -1,6 +1,6 @@
 
 
-// Load body display as none – DELIBERATELY PLACED BEFORE DOCUMENT READY FUNCTION
+// Load controls and background with a display as none – DELIBERATELY PLACED BEFORE DOCUMENT READY FUNCTION
 $('.curve-editor, .background').css('display', 'none');
 
 
