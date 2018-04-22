@@ -875,6 +875,7 @@ p.transition-css {
 
 .carousel {
 	height: 100vh;
+	transform: translateY(-1.5rem);
 	align-items: center;
 	z-index: 1;
 }
