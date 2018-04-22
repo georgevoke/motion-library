@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Motion Library | Softie</title>
+
+	<link rel="stylesheet" href="./css/reset.css">
+	<link rel="stylesheet" href="./css/style.css">
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata:700|Rubik:400,500" rel="stylesheet">
+	<link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<div class="carousel">
+		<a href="#"><img id="previousBtn" src="assets/chev-carousel.svg" class="hide" alt="Previous page"></a>
+		<a href="./yaynay.html"><img id="nextBtn" src="assets/chev-carousel.svg" alt="Next page"></a>
+	</div>
+
+	<section class="section-one centered">
+
+		<nav>
+  			<ul>
+				<li><a class="selected" href="#"></a></li>
+				<li><a href="./yaynay.html"></a></li>
+	  			<li><a href="./wibble.html"></a></li>
+	  			<li><a href="./index.html"></a></li>
+	 			<li><a href="./easygeaze.html"></a></li>
+	 			<li><a href="./happyslap.html"></a></li>
+	  			<li><a href="./runup.html"></a></li>
+  			</ul>
+		</nav>
+		
+  		<div class="curve-editor">
+			
+   			<h1>Softie</h1>
+
+   			<div id="previewBall" class="preview-ball cyan-bg ball-attention preview-one" alt="Animation preview ball"></div>
+    
+   			<div class="controls">
+      			<div class="speed-sect">
+		   			<span id="speedValue" class="speed"></span><span class="speed"> ms</span>
+      			</div> 	
+    	  		
+    			<div class="slider-sect">
+         			<input id="rangeValue" type="range" min="100" max="1800" value="500" step="10" class="slider">
+    	 		</div>
+			  	
+       			<div class="play-sect">
+			   		<a id="playButton" class="play cyan-play" href="Preview motion curve"><i class="fas fa-play"></i></a>
+			 		</div>
+    			</div>
+
+   				<a id="createCss" class="cta create" href="#">Create CSS</a>
+ 		</div>
+
+	</section>
+
+
+	<section class="section-two">
+
+		<div class="close">
+			<a id="close" href="#"><img class="cross centered" src="assets/cross.svg" alt="Back">Close</a>
+		</div>
+			
+    	<p class="transition-css" id="transitionCss">
+  			-webkit-transition: all <span></span>ms cubic-bezier(0.420, 0.000, 0.580, 1.000);<br/>
+   			-moz-transition: all <span></span>ms cubic-bezier(0.420, 0.000, 0.580, 1.000);<br/>
+   			-o-transition: all <span></span>ms cubic-bezier(0.420, 0.000, 0.580, 1.000);<br/>
+       		transition: all <span></span>ms cubic-bezier(0.420, 0.000, 0.580, 1.000); /* custom */<br/>
+			<br/>
+			-webkit-transition-timing-function: cubic-bezier(0.420, 0.000, 0.580, 1.000);<br/>
+   			-moz-transition-timing-function: cubic-bezier(0.420, 0.000, 0.580, 1.000);<br/>
+    		-o-transition-timing-function: cubic-bezier(0.420, 0.000, 0.580, 1.000);<br/>
+       		transition-timing-function: cubic-bezier(0.420, 0.000, 0.580, 1.000); /* custom */<br/>
+       	</p>
+
+       	<textarea class="staging-area" id="transitionCopy"></textarea>
+
+       	<a id="copyCss" class="cta copy cyan-copy" href="#">Copy to Clipboard</a>
+
+	</section>
+
+
+	<div class="background">
+		<div class="bg-shade"></div>
+    	<div class="bg-top">
+    		<img class="curve-margin" src="assets/curve-01.svg" alt="Motion Curve">
+    	</div>
+    	<div class="bg-bottom cyan-bg"></div>
+	</div>	
+
+<script src="./js/jquery.js"></script>
+<script src="./js/index.js"></script>
+</body>
+	
+</html>

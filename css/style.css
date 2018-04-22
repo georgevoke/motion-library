@@ -1,0 +1,908 @@
+/*
+Project Name: Final Project, Motion Library 
+Client: GA FEWD
+Author: George Voke
+Developer @GA in LDN
+*/
+
+
+
+
+/******************************************
+/* SETUP
+/*******************************************/
+
+
+/* Box Model Hack */
+* {
+	-moz-box-sizing: border-box; /* Firexfox */
+	-webkit-box-sizing: border-box; /* Safari/Chrome/iOS/Android */
+	box-sizing: border-box; /* IE */
+}
+
+/* Clear fix hack */
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+
+
+
+/******************************************
+/* BASE STYLES
+/*******************************************/
+
+
+html {
+	font-size: 14px;
+	font-weight: 400;
+}
+
+body {
+	font-family: 'Rubik', sans-serif;
+	font-weight: 400;
+	color: #FFF;
+	background-image: url("../assets/grid-cell.svg");
+	background-size: 10rem 10rem;
+	background-position: center;
+	background-color: #010D23;
+	overflow: hidden;
+}
+
+a {
+	text-decoration: none;
+	color: #010D23;
+}
+
+p {
+	font-family: 'Inconsolata', monospace;
+	line-height: 1.5;
+}
+
+.section-transition {
+	-webkit-transition: all 600ms cubic-bezier(0.360, 0.060, 0.045, 0.945); 
+  	 -moz-transition: all 600ms cubic-bezier(0.360, 0.060, 0.045, 0.945); 
+  	   -o-transition: all 600ms cubic-bezier(0.360, 0.060, 0.045, 0.945); 
+  	      transition: all 600ms cubic-bezier(0.360, 0.060, 0.045, 0.945);
+
+	-webkit-transition-timing-function: cubic-bezier(0.360, 0.060, 0.045, 0.945); 
+	   -moz-transition-timing-function: cubic-bezier(0.360, 0.060, 0.045, 0.945); 
+	     -o-transition-timing-function: cubic-bezier(0.360, 0.060, 0.045, 0.945); 
+	        transition-timing-function: cubic-bezier(0.360, 0.060, 0.045, 0.945);
+}
+
+.hide {
+	display: none;
+}
+
+
+
+
+/******************************************
+/* PRIMARY NAVIGATION – PIPS
+/*******************************************/
+
+
+nav {
+	display: none;
+}
+
+
+
+
+/******************************************
+/* SECONDARY NAVIGATION – CAROUSEL
+/*******************************************/
+
+
+.carousel {
+	position: fixed;
+	top: 1.825em;
+	width: 100%;
+	height: 4rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: flex-start;
+	z-index: 2;
+}
+
+.carousel a img {
+	height: 2rem;
+	margin: 0 2rem;
+}
+
+.carousel a {
+	opacity: 1.0;
+}
+
+.carousel a:last-child {
+	transform: rotate(180deg);
+}
+
+.hide-carousel {
+	transition: all 300ms;
+	transform: translateX(-4rem);
+	opacity: 0.0;
+}
+
+
+
+
+/******************************************
+/* CTAS
+/*******************************************/
+
+
+.cta {
+	display: inline-block;
+	letter-spacing: 0.05em;
+	padding: 0.75em 0;
+	text-transform: uppercase;
+}
+
+.create {
+	display: block;
+	color: #FFF;
+	border: 0.125rem solid #FFF;
+	margin-top: 1em;
+	padding: 1em 0;
+
+	position: relative;
+	overflow: hidden;
+	z-index: 1;
+}
+
+.copy {
+	color: #000D21;
+	border: 0.125rem solid #000D21;
+	position: relative;
+  	font-weight: 500;
+	padding: 1em 0;
+	width: 15em;
+}
+
+.copy:active {
+	border: 0.125rem solid #CC9600;
+	background-color: #CC9600;
+}
+
+.active:after {
+	padding: 0.75em 0;
+	content: "";
+	color: white;
+	height: 100%;
+	width: 100%;
+	background-image: url("../assets/tick.svg");
+	background-size: 6em 6em;
+	background-position: center center;
+	background-repeat: no-repeat;
+	opacity: 0.0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	animation: confirmation 2s;
+	z-index: 1;
+}
+
+@keyframes confirmation {
+	0% { transform: scale(0.6) translateY(0); }
+	50% { transform: scale(1) translateY(-322%); opacity: 1.0; }
+	100% { transform: scale(1) translateY(-330%); opacity: 1.0; }
+}
+
+
+
+
+/******************************************
+/* CURVE EDITOR
+/*******************************************/
+
+
+.section-one {
+	width: 100%;
+	padding: 0 1rem;		
+	position: absolute;
+	z-index: 1;
+	opacity: 1.0;
+}
+
+.curve-editor {
+	margin-top: 1.25rem;
+	text-align: center;
+}
+
+h1 {
+	font-size: 3.5rem;
+	margin-bottom: 20%;
+}
+
+
+/**********************
+/* PREVIEW BALL
+/***********************/
+
+
+.preview-ball {
+	width: 7.5rem;
+	height: 7.5rem;
+	border-radius: 50%;
+	background-color: rgba(255,194,0,1.0);
+	opacity: 0.9;
+	-webkit-box-shadow: 0em 0.0625em 0.625em 0.25em rgba(0,0,0,0.08);
+  		-moz-box-shadow: 0em 0.0625em 0.625em 0.25em rgba(0,0,0,0.08);
+			box-shadow: 0em 0.0625em 0.625em 0.25em rgba(0,0,0,0.08);   
+}
+
+.move-horizontal {
+	margin-left: 85%;
+}
+
+.ball-attention {
+	animation: pulse-hint 24s infinite ease-in-out;
+}
+
+@keyframes pulse-hint {
+	0% { transform: scale(0.97); }
+	4% { transform: scale(1.03); }
+	8% { transform: scale(0.97); }
+	12% { transform: scale(1.03); }
+	16% { transform: scale(0.97); }
+	20% { transform: scale(1.03); }
+	25% { transform: scale(0.97); }
+	28% { transform: scale(1.03); }
+	32% { transform: scale(0.97); }
+	36% { transform: scale(1.03); }
+	40% { transform: scale(0.97); }
+	44% { transform: scale(1.03); }
+	48% { transform: scale(0.97); }
+	52% { transform: scale(1.03); }
+	56% { transform: scale(0.97); }
+	60% { transform: scale(1.03); }
+	64% { transform: scale(0.97); }
+	68% { transform: scale(1.03); }
+	72% { transform: scale(0.97); }
+	76% { transform: scale(1.03); }
+	80% { transform: scale(0.97) translateX(0%); }
+	82% { transform: scale(1.00) translateX(-10%); }
+	84% { transform: scale(1.03) translateX(22%); }
+	86% { transform: scale(1.00) translateX(-10%); }
+	88% { transform: scale(1.03) translateX(10%); }
+	90% { transform: scale(1.00) translateX(-2%); }
+	92% { transform: scale(0.97) translateX(0%); }
+	96% { transform: scale(1.03); }
+	100% { transform: scale(0.97); }
+}
+
+.preview-one {
+	-webkit-transition: all 500ms cubic-bezier(0.420, 0.000, 0.580, 1.000); 
+		-moz-transition: all 500ms cubic-bezier(0.420, 0.000, 0.580, 1.000); 
+			-o-transition: all 500ms cubic-bezier(0.420, 0.000, 0.580, 1.000); 
+				transition: all 500ms cubic-bezier(0.420, 0.000, 0.580, 1.000);
+}
+
+.preview-two {
+	-webkit-transition: all 1400ms cubic-bezier(0.000, 0.990, 1.000, 0.000); 
+		-moz-transition: all 1400ms cubic-bezier(0.000, 0.990, 1.000, 0.000); 
+			-o-transition: all 1400ms cubic-bezier(0.000, 0.990, 1.000, 0.000); 
+				transition: all 1400ms cubic-bezier(0.000, 0.990, 1.000, 0.000);
+}
+
+.preview-three {
+	-webkit-transition: all 1100ms cubic-bezier(0.425, 0, 0.465, 1);
+	-webkit-transition: all 1100ms cubic-bezier(0.510, -0.600, 0.610, 2.200); 
+  	-moz-transition: all 1100ms cubic-bezier(0.510, -0.600, 0.610, 2.200); 
+  	-o-transition: all 1100ms cubic-bezier(0.510, -0.600, 0.610, 2.200); 
+  	transition: all 1100ms cubic-bezier(0.510, -0.600, 0.610, 2.200);
+}
+
+.preview-four {
+	-webkit-transition: all 1260ms cubic-bezier(0.135, 1, 0.930, 1);
+		-webkit-transition: all 1260ms cubic-bezier(0.135, 1.650, 0.930, 1.400); 
+			-moz-transition: all 1260ms cubic-bezier(0.135, 1.650, 0.930, 1.400); 
+				-o-transition: all 1260ms cubic-bezier(0.135, 1.650, 0.930, 1.400); 
+					transition: all 1260ms cubic-bezier(0.135, 1.650, 0.930, 1.400);
+}
+
+.preview-five {
+	-webkit-transition: all 800ms cubic-bezier(0.000, 0.390, 0.645, 1.000); 
+		-moz-transition: all 800ms cubic-bezier(0.000, 0.390, 0.645, 1.000); 
+			-o-transition: all 800ms cubic-bezier(0.000, 0.390, 0.645, 1.000); 
+				transition: all 800ms cubic-bezier(0.000, 0.390, 0.645, 1.000);
+}
+
+.preview-six {
+	-webkit-transition: all 800ms cubic-bezier(0.910, 0.000, 1.000, 0.490); 
+		-moz-transition: all 800ms cubic-bezier(0.910, 0.000, 1.000, 0.490); 
+			-o-transition: all 800ms cubic-bezier(0.910, 0.000, 1.000, 0.490); 
+				transition: all 800ms cubic-bezier(0.910, 0.000, 1.000, 0.490);
+}
+
+.preview-seven {
+	-webkit-transition: all 1260ms cubic-bezier(0.460, 0, 1.000, 0.075);
+		-webkit-transition: all 1260ms cubic-bezier(0.460, -0.590, 1.000, 0.075); 
+			-moz-transition: all 1260ms cubic-bezier(0.460, -0.590, 1.000, 0.075); 
+				-o-transition: all 1260ms cubic-bezier(0.460, -0.590, 1.000, 0.075); 
+					transition: all 1260ms cubic-bezier(0.460, -0.590, 1.000, 0.075);
+}
+
+
+
+
+/**********************
+/* CONTROLS
+/***********************/
+
+
+.controls {
+	margin-top: 3.75rem;
+}
+
+.speed-sect {
+	display: inline-block;
+	font-weight: 500;
+	text-align: center;
+	font-size: 1rem;
+	padding: 0.5em 1.2em;
+	border-radius: 1.2em;
+	background-color: rgba(0, 13, 33, 0.4); 
+}
+
+.speed {
+	display: inline;
+	color: rgba(255,255,255,1.0);
+	line-height: 1.25rem;
+	text-align: right;
+	border-radius: 0.3125em;
+}
+
+.slider-sect {
+	display: block;
+	margin: 3rem 0;
+}
+
+.play-sect {
+	display: block;
+}
+
+.play i {
+	display: block;
+	color: #000D21;
+	background-color: #FFF;
+	border: 0.125rem solid #FFF;
+	margin-top: 4.75em;
+	padding: 1em 0;
+	/*width: 12.5em;*/
+	text-align: center;
+	font-size: 1rem;
+	z-index: 1;
+}
+
+/*.play i {
+	text-align: center;
+	font-size: 1rem;
+	padding: 0.625em 0.59375em 0.625em 0.78125em;
+	color: #FFF;
+}*/
+
+.play i:active, .create:active {
+	color: rgba(255,255,255,0.4);
+	transition: all 300ms;
+}
+
+
+/**********************
+/* SLIDER
+/***********************/
+
+
+.slider {
+	-webkit-appearance: none;
+	appearance: none;
+	direction: rtl;
+	width: 100%;
+	height: 0.75em;
+	/*background: rgba(255, 255, 255, 0.3);*/
+	background: rgba(0, 13, 33, 0.4);
+	border-radius: 0.25em;
+	outline: none;
+	opacity: 1.0;
+	-webkit-transition: 0.2s;
+	transition: 0.2s;
+}
+
+.slider:hover {
+	/*background: rgba(255, 255, 255, 0.5);*/
+	background: rgba(0, 13, 33, 0.7);
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 50%;
+	background: #ffffff;
+	cursor: col-resize;
+	-webkit-box-shadow: 0px 1px 0.625em 4px rgba(0,0,0,0.08);
+		-moz-box-shadow: 0px 1px 10px 4px rgba(0,0,0,0.08);
+			box-shadow: 0px 1px 10px 4px rgba(0,0,0,0.08);
+}
+
+.slider::-webkit-slider-thumb:hover {
+	-webkit-box-shadow: 0px 1px 12px 4px rgba(0,0,0,0.12);
+		-moz-box-shadow: 0px 1px 12px 4px rgba(0,0,0,0.12);
+			box-shadow: 0px 1px 12px 4px rgba(0,0,0,0.12);
+}
+
+
+/**********************
+/* CREATE
+/***********************/
+
+
+.create:hover:before {
+	transform: translateY(0);
+}
+
+.hide-up {
+	margin-top: -100vh;
+	opacity: 0.0;
+}
+
+
+
+
+/******************************************
+/* GENERATED CSS
+/*******************************************/
+
+
+.section-two {
+	position: fixed;
+	font-weight: 500;
+	z-index: 1;
+	width: 95vw;
+	height: 90vh;
+	margin-top: 2.5vw;
+	margin-left: 2.5vw;
+	margin-right: 2.5vw;
+	background: rgba(255,255,255, 0.95);
+	text-align: center;
+  	opacity: 0.0;
+  	margin-top: 100vh;
+  	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.show {
+  	margin-top: 2.5vw;
+  	opacity: 1.0;
+}
+
+.close {
+	display: inline-block;
+	margin-top: 1em;
+	font-size: 1.125rem;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+img.cross {
+	margin-top: 2.1875rem;
+	margin-bottom: 0.9375rem;
+	width: 4rem;
+	height: 4rem;
+}
+
+p.transition-css {
+	margin: 3.25rem 2.5rem 2.5rem;
+	font-weight: 500;
+	text-align: left;
+	font-size: 1rem;
+	color: #010D23;
+}
+
+.staging-area {
+	opacity: 0.0;
+	position: absolute;
+	top: -100vh;
+}
+
+.centered {
+	margin-left: 50%;
+	-webkit-transform: translateX(-50%);
+		transform: translateX(-50%);
+}
+
+
+
+
+/******************************************
+/* BACKGROUND
+/*******************************************/
+
+
+.bg-shade {
+	position: absolute;
+	background-color: #000D21;
+	opacity: 0.5;
+	height: 250vh;
+	width: 100vw;
+}
+
+.bg-top {
+	width: 100%;
+}
+
+.bg-top img {
+	margin-top: 20%;
+}
+
+.bg-bottom {
+	margin-top: -0.3rem;
+ 	width: 100%;
+  	height: 200vh;
+  	background-color: #FFC200;;
+}
+
+
+
+
+/******************************************
+/* CYAN OVERRIDES
+/*******************************************/
+
+
+.cyan-bg {
+	background-color: #10FCF0;
+}
+
+.cyan-copy:active {
+	border: 0.125rem solid #0A8589;
+	background-color: #0A8589;
+}
+
+.cyan-copy:after {
+	background-image: url("../assets/tick-yellow.svg");
+}
+
+
+
+
+/******************************************
+/* MEDIA QUERIES
+/******************************************    600px -> 1024px */
+
+
+@media (min-width: 600px) {
+
+
+html {
+	font-size: 16px;
+}
+
+
+/**********************
+/* SECTION ONE
+/***********************/
+
+
+h1 {
+	font-size: 5.5rem;
+	margin-bottom: 5%;
+}
+
+.section-one {
+	width: 88%;	
+}
+
+.curve-editor {
+	margin-top: 6.4%;
+}
+
+.slider {
+	background: rgba(255, 255, 255, 0.3);
+}
+
+.slider:hover {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.slider::-webkit-slider-thumb {
+	width: 3.125rem;
+	height: 3.125rem;
+}
+
+
+/**********************
+/* CTAS
+/***********************/
+
+
+.create {
+	display: inline-block;
+	width: 12.5em;
+	margin-top: 4.75em;
+	padding: 0.75em 0;
+}
+
+.create:hover {
+	color: rgba(255,255,255, 0.0);
+}
+
+.create:before {
+	padding: 0.75em 0;
+	content: "";
+	color: white;
+	height: 100%;
+	width: 100%;
+	background-image: url("../assets/chev-down.svg");
+	background-size: 1.375em 2.1875em;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-color: #FFF;
+	position: absolute;
+	top: 0;
+	left: 0;
+	transform: translateY(100%);
+	transition: transform 0.2s;
+	z-index: -1;
+}
+
+.play i {
+	display: inline-block;
+	text-align: left;
+	font-size: 0.875rem;
+	width: unset;
+	margin-right: 50%;
+	padding: 0.625em 0.59375em 0.625em 0.78125em;
+	border-radius: 50%;
+	color: #010D23;
+	background-color: #FFF;
+	transition: all 300ms;
+	-webkit-box-shadow: 0em 0.0625em 0.625em 0.25em rgba(0,0,0,0.08);
+		-moz-box-shadow: 0em 0.0625em 0.625em 0.25em rgba(0,0,0,0.08);
+			box-shadow: 0em 0.0625em 0.625em 0.25em rgba(0,0,0,0.08);
+}
+
+i.attention {
+	background-color: #010D23;
+	border-color: #010D23;
+	color: #FFF;
+	transform: scale(1.24);
+}
+
+.play i:hover {
+	background-color: rgba(255,194,0,1.0);
+	border-color: rgba(255,194,0,1.0);
+	color: #FFF;
+	transition: all 300ms;
+}
+
+.copy {
+	padding: 0.75em 0;
+}
+
+.bg-bottom {
+	margin-top: -0.25rem;
+}
+
+
+/**********************
+/* PRIMARY NAVIGATION – PIPS
+/***********************/
+
+
+nav {
+	position: relative;
+	margin-top: 2.25em;
+	display: flex;
+	justify-content: center;
+}
+
+nav li {
+	display: inline-block;
+	margin-right: 2.25em;
+}
+
+nav li:last-child {
+	margin-right: 0%;
+}
+
+nav a {
+	position: relative;
+	background-color: #FFF;
+	font-size: 0em;
+	line-height: 0em;
+	border: 0.0625rem solid #FFF;
+	padding: 0.125rem;
+	transition: all 160ms;
+}
+
+.selected {
+ 	border: 0.4rem solid #FFF;
+}
+
+
+/**********************
+/* CONTROLS
+/***********************/
+
+
+.controls {
+	display: block;
+}
+
+.speed-sect {
+	display: inline-block;
+	width: 15%;
+	text-align: right;
+	font-size: unset;
+	padding: 0em;
+	background-color: rgba(255, 255, 255, 0.0); 
+}
+
+.slider-sect {
+	display: inline-block;
+	width: 68%;
+	margin: 0 0;
+}
+
+.play-sect {
+	display: inline-block;
+	width: 15%;
+}
+
+.bg-top img {
+	margin-top: 10%;
+}
+
+.bg-bottom {
+	margin-top: -0.3rem;
+}
+
+
+/**********************
+/* CYAN OVERRIDES
+/***********************/
+
+
+.cyan-play i:hover {
+	color: #010D23;
+	border-color: #10FCF0;
+	background-color: #10FCF0;
+}
+
+.cyan-copy:hover {
+	border: 0.125rem solid #10FCF0;
+	background-color: #10FCF0;
+}
+
+
+
+
+}
+
+
+
+
+/******************************************
+/* MEDIA QUERIES
+/******************************************    1024px ->  */
+
+
+@media (min-width: 1024px) {
+
+
+
+
+/**********************
+/* SECTION ONE
+/***********************/
+
+
+.section-one {
+	width: 50rem;			
+}
+
+.curve-editor {
+	margin-top: 7.2%;
+}
+
+.bg-top img {
+	margin-top: 0%;
+}
+
+
+/**********************
+/* SECONDARY NAVIGATION – CAROUSEL
+/***********************/
+
+
+.carousel {
+	height: 100vh;
+	align-items: center;
+	z-index: 1;
+}
+
+.hide-carousel {
+	transition: all 300ms;
+	transform: translateX(-4rem);
+	opacity: 0.0;
+}
+
+.carousel a img {
+	height: 3.5rem;
+}
+
+.carousel a {
+	opacity: 0.5;
+}
+
+.carousel a:hover {
+	transition: all 300ms;
+	transform: translateX(-0.4rem);
+	opacity: 1.0;
+}
+
+.carousel a:last-child:hover {
+	transform: rotate(180deg) translateX(-0.4rem);
+}
+
+
+/**********************
+/* PRIMARY NAVIGATION – PIPS
+/***********************/
+
+
+nav a {
+	background-color: rgba(255, 255, 255, 0.0);
+	padding: 0.3125rem;
+}
+
+
+nav a:hover {
+	margin-left: -0.125rem;
+	margin-right: -0.125rem;
+	border: 0.1875rem solid #FFF;
+	background-color: #FFF;
+}
+
+.selected {
+ 	border: 0.1875rem solid #FFF;
+	background-color: #FFF; 
+}
+
+nav a.selected:hover {
+	cursor: default;
+	margin: unset;
+}
+
+
+
+
+}
+
+
+
+
+/******************************************
+/* MEDIA QUERIES
+/******************************************    1200px ->  */
+
+
+@media (min-width: 1200px) {
+
+
+}
+
+
+
